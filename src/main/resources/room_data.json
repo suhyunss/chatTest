@@ -1,0 +1,187 @@
+[
+  {
+    "roomId": "1",
+    "estimateNum": "20250227-01-001",
+    "participantList": [
+      {
+        "id": "CAP01",
+        "userName": "캐피탈1",
+        "authority": "CAP"
+      },
+      {
+        "id": "CAP02",
+        "userName": "캐피탈2",
+        "authority": "CAP"
+      }
+    ]
+  },
+  {
+    "roomId": "2",
+    "estimateNum": "20250227-01-002",
+    "participantList": [
+      {
+        "id": "AG01",
+        "userName": "에이전트1",
+        "authority": "AG"
+      },
+      {
+        "id": "CAP01",
+        "userName": "캐피탈1",
+        "authority": "CAP"
+      },
+      {
+        "id": "CAP03",
+        "userName": "캐피탈3",
+        "authority": "CAP"
+      }
+    ]
+  },
+  {
+    "roomId": "3",
+    "estimateNum": "20250227-01-003",
+    "participantList": [
+      {
+        "id": "AG01",
+        "userName": "에이전트1",
+        "authority": "AG"
+      },
+      {
+        "id": "CAP01",
+        "userName": "캐피탈1",
+        "authority": "CAP"
+      }
+    ]
+  },
+  {
+    "roomId": "4",
+    "estimateNum": "20250227-01-004",
+    "participantList": [
+      {
+        "id": "AG01",
+        "userName": "에이전트1",
+        "authority": "AG"
+      },
+      {
+        "id": "AG02",
+        "userName": "에이전트2",
+        "authority": "AG"
+      },
+      {
+        "id": "AG03",
+        "userName": "에이전트3",
+        "authority": "AG"
+      },
+      {
+        "id": "CAP01",
+        "userName": "캐피탈1",
+        "authority": "CAP"
+      },
+      {
+        "id": "CAP02",
+        "userName": "캐피탈2",
+        "authority": "CAP"
+      },
+      {
+        "id": "CAP03",
+        "userName": "캐피탈3",
+        "authority": "CAP"
+      }
+    ]
+  },
+  {
+    "roomId": "5",
+    "estimateNum": "20250227-01-005",
+    "participantList": [
+      {
+        "id": "AG01",
+        "userName": "에이전트1",
+        "authority": "AG"
+      },
+      {
+        "id": "CAP01",
+        "userName": "캐피탈1",
+        "authority": "CAP"
+      }
+    ]
+  },
+  {
+    "roomId": "6",
+    "estimateNum": "20250227-01-006",
+    "participantList": [
+      {
+        "id": "AG01",
+        "userName": "에이전트1",
+        "authority": "AG"
+      },
+      {
+        "id": "CAP01",
+        "userName": "캐피탈1",
+        "authority": "CAP"
+      }
+    ]
+  },
+  {
+    "roomId": "7",
+    "estimateNum": "20250227-01-007",
+    "participantList": [
+      {
+        "id": "AG01",
+        "userName": "에이전트1",
+        "authority": "AG"
+      },
+      {
+        "id": "CAP01",
+        "userName": "캐피탈1",
+        "authority": "CAP"
+      }
+    ]
+  },
+  {
+    "roomId": "8",
+    "estimateNum": "20250227-01-008",
+    "participantList": [
+      {
+        "id": "AG01",
+        "userName": "에이전트1",
+        "authority": "AG"
+      },
+      {
+        "id": "CAP01",
+        "userName": "캐피탈1",
+        "authority": "CAP"
+      }
+    ]
+  },
+  {
+    "roomId": "9",
+    "estimateNum": "20250227-01-009",
+    "participantList": [
+      {
+        "id": "AG01",
+        "userName": "에이전트1",
+        "authority": "AG"
+      },
+      {
+        "id": "CAP01",
+        "userName": "캐피탈1",
+        "authority": "CAP"
+      }
+    ]
+  },
+  {
+    "roomId": "10",
+    "estimateNum": "20250227-01-010",
+    "participantList": [
+      {
+        "id": "AG01",
+        "userName": "에이전트1",
+        "authority": "AG"
+      },
+      {
+        "id": "CAP01",
+        "userName": "캐피탈1",
+        "authority": "CAP"
+      }
+    ]
+  }
+]
