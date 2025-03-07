@@ -38,9 +38,14 @@ public class ChatController {
         this.chatService = chatService;
     }
 
+    /*
+     * 메인 화면
+     */
     @GetMapping("/")
     public String home(HttpSession session, Model model) throws IOException {
-        log.info("⭐ 기본 화면");
+        log.info("⭐ 로그인 화면 ⭐");
+
+        session.removeAttribute("user");
 
         List<Map.Entry<String, List<User>>> userGroups = List.of(
                 new AbstractMap.SimpleEntry<>("AG", userService.getAgs()),
@@ -48,18 +53,18 @@ public class ChatController {
                 new AbstractMap.SimpleEntry<>("ADMIN", userService.getAdmins())
         );
 
-
-
         model.addAttribute("userGroups", userGroups);
         return "home";
     }
 
+    /*
+     * 로그인 처리(POST)
+     */
     @ResponseBody
     @PostMapping("/login.do")
     public String login(HttpSession session, @RequestParam("userId") String userId) throws IOException {
-        log.info("로그인 시도 : {}", userId);
+        log.info("로그인 시도 = {}", userId);
 
-        session.removeAttribute("user");
         User user = userService.getUserById(userId);
 
         if (user != null) {
@@ -70,11 +75,14 @@ public class ChatController {
         }
     }
 
+    /*
+     * 채팅방 리스트
+     */
     @GetMapping("/list.do")
     public String list(HttpSession session, Model model) throws IOException {
 
         User user = (User) session.getAttribute("user");
-        log.info("리스트 화면 로그인 Id = {}", user != null ? user.getId() : "No User");
+        log.info("리스트 화면 로그인 Id : {}", user != null ? user.getId() : "No User");
 
         if (user == null) {
             return "redirect:/";
@@ -89,9 +97,12 @@ public class ChatController {
         return "list";
     }
 
+    /*
+     * 방 만들기
+     */
     @GetMapping("/createRoom.do")
     public String createRoom(@RequestParam("estimateNum") String estimateNum, Model model) throws IOException {
-        log.info("🚀 방 만들기 - 견적번호: {}", estimateNum);
+        log.info("🚀 방 만들기 - 견적번호 : {}", estimateNum);
         List<User> participants = List.of();
 
         Room room = roomService.getRoomByEstimateNum(estimateNum);
@@ -110,6 +121,9 @@ public class ChatController {
         return "createRoom";
     }
 
+    /*
+     * 방 - 참여자 초대
+     */
     @ResponseBody
     @PostMapping("/addParticipantsToRoom.do")
     public Map<String, Object> addParticipantsToRoom(@RequestBody Map<String, Object> requestBody) throws IOException {
@@ -119,9 +133,9 @@ public class ChatController {
 
         log.info("🚀🚀 (초대) 견적번호: {}, id : {}", estimateNum, userIds.toString());
 
-        List<User> users = userService.getUsersByIds(userIds);
+        List<User> users = userService.getUsersByIds(userIds); // ID로 User 정보 가져오기
 
-        roomService.addParticipantsToRoom(estimateNum, users);
+        roomService.addParticipantsToRoom(estimateNum, users); // 방 정보에 참여자 정보 추가
 
         Map<String, Object> response = new HashMap<>();
         response.put("estimateNum", estimateNum);
@@ -140,7 +154,6 @@ public class ChatController {
 
         return Map.of("included", included, "excluded", excluded);
     }
-
 
     /*
      * 채팅방
@@ -161,6 +174,4 @@ public class ChatController {
         List<ChatMessage> chatMessages = chatService.findByEstimateNum(estimateNum);
         return ResponseEntity.ok(chatMessages); // JSON으로 반환
     }
-
-
 }

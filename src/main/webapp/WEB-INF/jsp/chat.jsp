@@ -24,12 +24,36 @@
 </div>
 
 <script>
+
+    const user = JSON.parse('${user}');
+    const estimateNum = '${estimateNum}';
+    const $chatBox = $("#chatBox");
+    const $chatInput = $("#chat-input");
+    const wsProtocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+    const wsHost = window.location.host;
+    const socketUrl = wsProtocol + "://" + wsHost + "/chat/" + estimateNum;
+    let socket = null;
+
     $(document).ready(function () {
-        const user = JSON.parse('${user}');
-        const estimateNum = '${estimateNum}';
-        const socket = new WebSocket('ws://localhost:8080/chat/' + estimateNum);
-        const $chatBox = $("#chatBox");
-        const $chatInput = $("#chat-input");
+        connectWebSocket();
+
+        $chatInput.on("keypress", function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                sendMessage();
+            }
+        });
+    });
+
+    function connectWebSocket() {
+
+        // WebSocket이 이미 연결 상태가 아니면 새로운 연결 시도
+        if (socket && socket.readyState !== WebSocket.OPEN) {
+            console.log("기존 WebSocket 상태:", socket.readyState);
+            socket.close();  // 이전 WebSocket이 열려있다면 닫기
+        }
+
+        socket = new WebSocket(socketUrl);
 
         socket.onopen = function () {
             console.log("WebSocket 연결 성공");
@@ -43,6 +67,7 @@
 
         socket.onclose = function () {
             console.log("WebSocket 연결 종료");
+            setTimeout(connectWebSocket, 3000); // 3초 뒤 재연결 시도
         };
 
         socket.onerror = function (error) {
@@ -58,11 +83,14 @@
             }
         }
 
-        function appendMessage(userId, content) {
-            const isCurrentUser = user.id === userId;
-            const rowClass = isCurrentUser ? 'row justify-content-end' : 'row';
 
-            const messageHtml = `
+    }
+
+    function appendMessage(userId, content) {
+        const isCurrentUser = user.id === userId;
+        const rowClass = isCurrentUser ? 'row justify-content-end' : 'row';
+
+        const messageHtml = `
                 <div class="container-fluid">
                     <div class="` + rowClass + `">
                         <div class="col-xl-6 col-md-6 mb-4">
@@ -87,44 +115,34 @@
                     </div>
                 </div>
             `;
-            $chatBox.append(messageHtml);
-            $chatBox.scrollTop($chatBox[0].scrollHeight);
+        $chatBox.append(messageHtml);
+        $chatBox.scrollTop($chatBox[0].scrollHeight);
+    }
+
+    function sendMessage() {
+        const messageContent = $chatInput.val().trim();
+        if (messageContent) {
+            const message = { user, content: messageContent };
+            socket.send(JSON.stringify(message));
+            $chatInput.val("");
         }
+    }
 
-
-        $chatInput.on("keypress", function (event) {
-            if (event.key === "Enter") {
-                event.preventDefault();
-                sendMessage();
+    function loadChatHistory() {
+        $.ajax({
+            url: `/${estimateNum}/history`,
+            method: "GET",
+            dataType: "json",
+            success: function (data) {
+                $.each(data, function (index, chatMessage) {
+                    appendMessage(chatMessage.user.id, chatMessage.content);
+                });
+            },
+            error: function (error) {
+                console.error("채팅 내역 로드 오류:", error);
             }
         });
-
-        function sendMessage() {
-            const messageContent = $chatInput.val().trim();
-            if (messageContent) {
-                const message = { user, content: messageContent };
-                socket.send(JSON.stringify(message));
-                $chatInput.val("");
-            }
-        }
-
-        function loadChatHistory() {
-            $.ajax({
-                url: `/${estimateNum}/history`,
-                method: "GET",
-                dataType: "json",
-                success: function (data) {
-                    $.each(data, function (index, chatMessage) {
-                        appendMessage(chatMessage.user.id, chatMessage.content);
-                    });
-                },
-                error: function (error) {
-                    console.error("채팅 내역 로드 오류:", error);
-                }
-            });
-        }
-    });
+    }
 </script>
-
 </body>
 </html>

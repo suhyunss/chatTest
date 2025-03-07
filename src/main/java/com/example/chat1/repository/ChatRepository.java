@@ -14,7 +14,8 @@ import java.util.List;
 @Log4j2
 public class ChatRepository {
 
-    private static final String FILE_PATH = "src/main/resources/chat_data.json";
+    private static final String FILE_PATH = "./data/chat_data.json";
+//    private static final String FILE_PATH = "src/main/resources/chat_data.json";
     private final ObjectMapper objectMapper = new ObjectMapper();
 
 

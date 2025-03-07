@@ -16,7 +16,8 @@ import java.util.List;
 @Log4j2
 public class RoomRepository {
 
-    private static final String FILE_PATH = "src/main/resources/room_data.json";
+    private static final String FILE_PATH = "./data/room_data.json";
+//    private static final String FILE_PATH = "src/main/resources/room_data.json";
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     // 모든 방 목록을 읽는 메소드

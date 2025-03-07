@@ -12,11 +12,12 @@ import java.util.List;
 @Repository
 public class UserRepository {
 
-    private final String filePath = "src/main/resources/user_data.json";
+    private static final String FILE_PATH = "./data/user_data.json";
+//    private final String filePath = "src/main/resources/user_data.json";
 
     public List<User> getAllUsers() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(new File(filePath),
+        return objectMapper.readValue(new File(FILE_PATH),
                 objectMapper.getTypeFactory().constructCollectionType(List.class, User.class));
     }
 }
